@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ tempalte "metabase.fullname" . }}-env
+  name: {{ template "metabase.fullname" . }}-env
   namespace: {{ .Release.Namespace }}
   labels:
     {{- template "labels" . }}

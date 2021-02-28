@@ -31,7 +31,7 @@ Labels common to all resources
     app: {{ template "metabase.name" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }
+    heritage: {{ .Release.Service }}
 {{- end }}
 
 {{/*
