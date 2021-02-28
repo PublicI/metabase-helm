@@ -8,10 +8,7 @@ metadata:
   name: {{ template "metabase.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ template "metabase.name" . }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
-    heritage: {{ .Release.Service }}
+    {{- template "labels" . }}
   {{- range $key, $value := .Values.ingress.labels }}
     {{ $key }}: {{ $value | quote }}
   {{- end }}
