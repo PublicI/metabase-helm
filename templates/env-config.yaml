@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ tempalte "metabase.fullname" . }}-env
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- template "labels" . }}
+data:
+  MB_JETTY_HOST: {{ .Values.listen.host | quote }}
+  MB_JETTY_PORT: {{ .Values.listen.port | quote }}
+
+  MB_PASSWORD_COMPLEXITY: {{ .Values.password.complexity }}
+  MB_PASSWORD_LENGTH: {{ .Values.password.length | quote }}
+
+  MB_EMOJI_IN_LOGS: {{ .Values.emojiLogging | quote }}
+
+  JAVA_TIMEZONE: {{ .Values.timeZone }}
+  {{- if .Values.javaOpts }}
+  JAVA_OPTS: {{ .Values.javaOpts | quote }}
+  {{- else }}
+    {{- if .Values.log4jProperties }}
+  JAVA_OPTS: "-Dlog4j.configuration=file:/tmp/conf/log4j.properties"
+    {{- end }}
+  {{- end }}
+
+  {{- if .Values.pluginsDirectory }}
+  MB_PLUGINS_DIR: {{ .Values.pluginsDirectory | quote }}
+  {{- end }}
+  {{- if .Values.siteUrl }}
+  MB_SITE_URL: {{ .Values.siteUrl | quote }}
+  {{- end }}
+  {{- if .Values.session.maxSessionAge }}
+  MAX_SESSION_AGE: {{ .Values.session.maxSessionAge | quote }}
+  {{- end }}
+  {{- if .Values.session.sessionCookies }}
+  MB_SESSION_COOKIES: {{ .Values.session.sessionCookies | quote }}
+  {{- end }}
+
+
+  {{- if .Values.jetty }}
+    {{- range $key, $value := .Values.jetty }}
+  {{ printf "MB_JETTY_%s" $key | upper }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
