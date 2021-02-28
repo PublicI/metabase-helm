@@ -60,21 +60,24 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /tmp/conf/
-          {{- end}}
+          {{- end }}
           resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
+          {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.sidecars }}
+            {{- toYaml .Values.sidecars | nindent 8 }}
+          {{- end }}
+      {{- with .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
       affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
       tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         {{- if .Values.log4jProperties}}
         - name: config

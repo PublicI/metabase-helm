@@ -11,6 +11,8 @@ image:
   pullPolicy: IfNotPresent
 
 serviceAccountName:
+
+sidecars:
 ## String to fully override metabase.fullname template
 ##
 # fullnameOverride:
