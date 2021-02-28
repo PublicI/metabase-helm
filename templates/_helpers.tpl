@@ -25,6 +25,16 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{/*
+Labels common to all resources
+*/}}
+{{- define "labels" }}
+    app: {{ template "metabase.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }
+{{- end }}
+
+{{/*
 Return the apiVersion of deployment.
 */}}
 {{- define "deployment.apiVersion" -}}
